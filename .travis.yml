@@ -2,18 +2,18 @@ sudo: required
 
 language: python
 python:
-    - 3.6
+  - "3.6"
 
 services:
-    - docker
+  - docker
+
+branches:
+  only:
+    - master
+    - production
 
 install:
-    - make illumidesk-jupyter/test-env
+  - bash scripts/install.sh
 
 script:
-    - make illumidesk-jupyter/test
-    - docker build --no-cache -t $DOCKER_JUPYTER_IMAGE_NAME illumidesk-jupyter/ .
-    - docker tag $DOCKER_JUPYTER_IMAGE_NAME $DOCKER_JUPYTER_IMAGE_NAME:$GITHUB_PROD_BRANCH-$TRAVIS_BUILD_NUMBER;
-    - docker push $DOCKER_JUPYTER_IMAGE_NAME:$GITHUB_PROD_BRANCH-$TRAVIS_BUILD_NUMBER;
-    - docker tag $DOCKER_JUPYTER_IMAGE_NAME $DOCKER_JUPYTER_IMAGE_NAME:$GITHUB_PROD_BRANCH-latest;
-    - docker push $DOCKER_JUPYTER_IMAGE_NAME:$GITHUB_PROD_BRANCH-latest;
+  - bash scripts/script.sh
