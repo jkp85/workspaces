@@ -5,8 +5,6 @@ sudo: required
 services:
     - docker
 install:
-    - make dev-env
+    - make illumidesk-jupyter/test-env
 script:
-    - set -e
-    - make test/docs docs
-    - make build-test-all DARGS="--build-arg TEST_ONLY_BUILD=1"
+    - make illumidesk-jupyter/test
