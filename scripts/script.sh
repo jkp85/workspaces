@@ -32,8 +32,6 @@ build_and_push () {
 main () {
   # linting errors shouldn't make travis fail
   set +e
-  echo "Smoke test images"
-  test
   echo "Build and push images..."
   build_and_push
 }
