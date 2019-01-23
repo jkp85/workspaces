@@ -142,6 +142,7 @@ RUN conda install --quiet --yes \
     'vincent=0.4.*' \
     'beautifulsoup4=4.6.*' \
     'protobuf=3.*' \
+    's3contents=0.1.12' \
     'xlrd' && \
     conda remove --quiet --yes --force qt pyqt && \
     conda clean -tipsy

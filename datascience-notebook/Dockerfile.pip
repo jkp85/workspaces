@@ -136,6 +136,7 @@ RUN pip2 install --user \
     pyyaml \
     scipy \
     scikit-learn \
+    s3contents \
     sympy
 
 # Install Python3 packages
@@ -150,6 +151,7 @@ RUN pip3 install --user \
     pyyaml \
     scipy \
     scikit-learn \
+    s3contents \
     sympy
 
 # Configure container startup as root
