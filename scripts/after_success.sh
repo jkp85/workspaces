@@ -9,10 +9,8 @@ tag_and_push () {
     if [ "${TRAVIS_BRANCH}" == "${GITHUB_DEV_BRANCH}" ]; then
       export TAG="${GITHUB_DEV_BRANCH}"-latest
       make push-all;
-    # check if the merge is branch set with env var
     elif [ "${TRAVIS_BRANCH}" == "${GITHUB_PROD_BRANCH}" ]; then
       export TAG="${GITHUB_PROD_BRANCH}"-latest
-      # first build and tag docker images
       make push-all;
     fi
   fi
