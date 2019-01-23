@@ -30,12 +30,9 @@ RUN jupyter labextension install @illumidesknow/jupyter-lti
 # copy/install as root, then fix permissions for $NB_USER
 USER root
 
-COPY --from=canvas jupyter-lti-master /jupyter-lti
-RUN jupyter labextension install /jupyter-lti
+RUN jupyter labextension install @illumidesknow/jupyter-lti
 COPY jupyter_notebook_config.py /etc/jupyter/
-
 RUN fix-permissions /etc/jupyter/
-RUN fix-permissions /jupyter-lti
 
 # set container to run with $NB_USER by default
 USER $NB_UID
