@@ -13,7 +13,7 @@ branches:
     - production
 
 before_install:
-  - ./.travis/before_install.sh
+  - bash scripts/before_install.sh
 
 install:
   - make dev-env
@@ -23,4 +23,4 @@ script:
   - make build-all
 
 after_success:
-  - ./.travis/after_success.sh
+  - bash scripts/after_success.sh
