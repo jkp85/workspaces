@@ -3,7 +3,7 @@
 set -e
 
 docker_login () {
-    docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
+    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 }
 
 # no need to build and tag images for pull requests.
