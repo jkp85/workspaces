@@ -40,10 +40,7 @@ dev/%: ## Make a container from a tagged image image
 dev-env: ## Install libraries required to run containers and tests
 	pip install -r requirements-dev.txt
 
-push-dockerhub/%: ## Push the image to DockerHub
-    docker push $(OWNER)/$(notdir $@):$(TAG)
-
 push/%: ## Build and tag a stack
-	docker push $(OWNER)/$(notdir $@):$(TAG) ./$(notdir $@)
+	docker push $(OWNER)/$(notdir $@):$(TAG)
 
 push-all: $(foreach I,$(ALL_IMAGES), push/$(I) ) ## Push all stacks
