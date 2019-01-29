@@ -25,12 +25,12 @@ RUN conda install --quiet --yes \
   conda clean -tipsy
 
 # install jupyter-lti extension
-RUN jupyter labextension install @illumidesknow/jupyter-lti
+RUN jupyter labextension install @illumidesk/jupyter-lti
 
 # copy/install as root, then fix permissions for $NB_USER
 USER root
 
-RUN jupyter labextension install @illumidesknow/jupyter-lti
+RUN jupyter labextension install @illumidesk/jupyter-lti
 COPY jupyter_notebook_config.py /etc/jupyter/
 RUN fix-permissions /etc/jupyter/
 
