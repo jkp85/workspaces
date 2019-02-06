@@ -9,20 +9,34 @@ FROM $BASE_IMAGE
 
 LABEL maintainer="IllumiDesk <hello@illumidesk.com>"
 
+USER root
+
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends gcc && \
+    rm -rf /var/lib/apt/lists/*
+
 # base image should have $NB_UID already set, but set it
 # explicitly just in case
 USER $NB_UID
 
+# Xeus Cling
+RUN conda install xeus -c conda-forge && \
+    conda clean -tipsy && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
+# Install Tensorflow
+RUN conda install --quiet --yes \
+    'tensorflow=1.12*' \
+    'keras=2.2*' && \
+    conda clean -tipsy && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
 # install nodejs kernel
 RUN conda install -c conda-forge nodejs
 RUN npm install -g ijavascript
-
-# Xeus Cling
-RUN conda install --quiet --yes \
-  -c QuantStack \
-  -c conda-forge \
-  xeus-cling && \
-  conda clean -tipsy
+RUN ijsinstall
 
 # install jupyter-lti extension
 RUN jupyter labextension install @illumidesk/jupyter-lti
@@ -32,6 +46,7 @@ USER root
 
 RUN jupyter labextension install @illumidesk/jupyter-lti
 COPY jupyter_notebook_config.py /etc/jupyter/
+COPY env_test.ipynb $HOME/
 RUN fix-permissions /etc/jupyter/
 
 # set container to run with $NB_USER by default
