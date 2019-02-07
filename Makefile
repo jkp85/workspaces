@@ -7,7 +7,8 @@ NAMESPACE:=$(OWNER)/$(DOCKER_IMAGE)
 TAG?=dev
 SHELL:=bash
 
-ALL_STACKS:=datascience-notebook
+ALL_STACKS:=minimal-notebook \
+        datascience-notebook
 
 ALL_IMAGES:=$(ALL_STACKS)
 
@@ -29,6 +30,10 @@ build/%: ## Build and tag a stack
 
 build-all: $(foreach I,$(ALL_IMAGES), build/$(I) ) ## Build all stacks
 build-test-all: $(foreach I,$(ALL_IMAGES),build/$(I) test/$(I) ) ## build and test all stacks
+
+test-nb/%: DARGS?=
+test-nb/%: ## test stack
+	py.test --nbval test_runner.py $(DARGS)
 
 dev/%: ARGS?=
 dev/%: DARGS?=
