@@ -1,12 +1,10 @@
-.PHONY: help build build-all dev dev-env push test
-
+.PHONY: help
 # Docker image name and tag. Build assumes ACCOUNT is set
 # as an env var before running any commands.
 OWNER?=$(ACCOUNT)
 IMAGE?=$(DOCKER_IMAGE)
 NAMESPACE:=$(OWNER)/$(DOCKER_IMAGE)
-TAG?=latest
-# Shell that make should use
+TAG?=dev
 SHELL:=bash
 
 ALL_STACKS:=datascience-notebook
@@ -30,6 +28,7 @@ build/%: ## Build and tag a stack
 	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):$(TAG) ./$(notdir $@)
 
 build-all: $(foreach I,$(ALL_IMAGES), build/$(I) ) ## Build all stacks
+build-test-all: $(foreach I,$(ALL_IMAGES),build/$(I) test/$(I) ) ## build and test all stacks
 
 dev/%: ARGS?=
 dev/%: DARGS?=
@@ -44,6 +43,3 @@ push/%: ## Push an image to the registry
 	docker push $(OWNER)/$(notdir $@):$(TAG)
 
 push-all: $(foreach I,$(ALL_IMAGES), push/$(I) ) ## Push all stacks
-
-test/%: ## run tests against a stack
-	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test

@@ -19,12 +19,6 @@ RUN apt-get update && apt-get upgrade -y && \
 # explicitly just in case
 USER $NB_UID
 
-# Xeus Cling
-RUN conda install xeus -c conda-forge && \
-    conda clean -tipsy && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
-
 # Install Tensorflow
 RUN conda install --quiet --yes \
     'tensorflow=1.12*' \
@@ -37,6 +31,12 @@ RUN conda install --quiet --yes \
 RUN conda install -c conda-forge nodejs
 RUN npm install -g ijavascript
 RUN ijsinstall
+
+# Xeus Cling
+RUN conda install -c conda-forge xeus-cling && \
+    conda clean -tipsy && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
 
 # install jupyter-lti extension
 RUN jupyter labextension install @illumidesk/jupyter-lti
