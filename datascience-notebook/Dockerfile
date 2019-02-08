@@ -52,5 +52,7 @@ RUN fix-permissions $HOME/env_test.ipynb
 
 EXPOSE 8080
 
+EXPOSE 8080
+
 # set container to run with $NB_USER by default
 USER $NB_UID
