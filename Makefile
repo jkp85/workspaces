@@ -1,15 +1,14 @@
-.PHONY: help build build-all build-test-all dev dev-env push-dockerhub test
-
-# Docker image name and tag. ACCOUNT is used here instead
-# of OWNER since we may push to another registry in the future.
-OWNER?=$(OWNER)
+.PHONY: help
+# Docker image name and tag. Build assumes ACCOUNT is set
+# as an env var before running any commands.
+OWNER?=$(ACCOUNT)
 IMAGE?=$(DOCKER_IMAGE)
 NAMESPACE:=$(OWNER)/$(DOCKER_IMAGE)
 TAG?=latest
-# Shell that make should use
 SHELL:=bash
 
-ALL_STACKS:=datascience-notebook
+ALL_STACKS:=minimal-notebook \
+        datascience-notebook
 
 ALL_IMAGES:=$(ALL_STACKS)
 
@@ -30,17 +29,22 @@ build/%: ## Build and tag a stack
 	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):$(TAG) ./$(notdir $@)
 
 build-all: $(foreach I,$(ALL_IMAGES), build/$(I) ) ## Build all stacks
+build-test-all: $(foreach I,$(ALL_IMAGES),build/$(I) test/$(I) ) ## build and test all stacks
+
+test/%: ## run tests against a stack
+	@TEST_IMAGE="$(OWNER)/$(notdir $@)" py.test --nbval test
+test-all: $(foreach I,$(ALL_IMAGES), test/$(I) ) ## test all stacks
 
 dev/%: ARGS?=
 dev/%: DARGS?=
-dev/%: PORT?=8888
-dev/%: ## Make a container from a tagged image image
-	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
+dev/%: PORT?=8080
+dev/%: ## Make a container from a tagged image
+	docker run -it --rm -p $(PORT):8080 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
 
 dev-env: ## Install libraries required to run containers and tests
 	pip install -r requirements-dev.txt
 
-push/%: ## Build and tag a stack
+push/%: ## Push an image to the registry
 	docker push $(OWNER)/$(notdir $@):$(TAG)
 
 push-all: $(foreach I,$(ALL_IMAGES), push/$(I) ) ## Push all stacks
