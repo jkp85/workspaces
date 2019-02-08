@@ -11,9 +11,11 @@ tag_and_push () {
   if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
     if [ "${TRAVIS_BRANCH}" == "${GITHUB_DEV_BRANCH}" ]; then
       export TAG="${GITHUB_DEV_BRANCH}"-"${TRAVIS_BUILD_NUMBER}"
+      make build-all;
       make push-all;
     elif [ "${TRAVIS_BRANCH}" == "${GITHUB_PROD_BRANCH}" ]; then
       export TAG="${GITHUB_PROD_BRANCH}"-"${TRAVIS_BUILD_NUMBER}"
+      make build-all;
       make push-all;
     fi
   fi
