@@ -34,5 +34,7 @@ RUN jupyter labextension install @illumidesk/jupyter-lti
 COPY jupyter_notebook_config.py /etc/jupyter/
 RUN fix-permissions /etc/jupyter/
 
+EXPOSE 8080
+
 # set container to run with $NB_USER by default
 USER $NB_UID
