@@ -19,7 +19,7 @@ The basics:
 
 The basics:
 
-    docker run -d -p 8888:8888 illumidesk/datascience-notebook
+    docker run -d -p 8080:8080 illumidesk/datascience-notebook
 
 ## Build
 

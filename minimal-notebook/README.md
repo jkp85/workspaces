@@ -1,29 +1,24 @@
-# illumidesk/datascience-notebook
+# illumidesk/minimal-notebook
 
-illumidesk/datascience-notebook is a community maintained Jupyter Notebook image.
+illumidesk/minimal-notebook is a community maintained Jupyter Notebook image.
 
 ## What It Includes
 
-This image is uses `[jupyter/datascience-notebook](https://github.com/jupyter/docker-stacks/datascience-notebook) as the base image.
+This image is uses `[jupyter/minimal-notebook](https://github.com/jupyter/docker-stacks/minimal-notebook) as the base image.
 
 The basics:
 
-- [Python 3 with scientific packages](https://www.anaconda.com/distribution/)
-- [R](https://github.com/IRkernel/IRkernel)
-- [Julia](https://github.com/JuliaLang/IJulia.jl)
-- [C++ kernels with Xeus](http://quantstack.net/xeus.html)
-- [Tensorflow with Keras](https://www.tensorflow.org/)
-- [NodeJs (Javascript)](http://n-riesco.github.io/ijavascript/)
+- [Miniconda Python 3](https://www.anaconda.com/distribution/)
 
 ## Run
 
 The basics:
 
-    docker run -d -p 8888:8888 illumidesk/datascience-notebook
+    docker run -d -p 8080:8080 illumidesk/minimal-notebook
 
 ## Build
 
-    docker build -t illumidesk/datascience-notebook .
+    docker build -t illumidesk/minimal-notebook .
 
 ## Verify Environment Settings
 

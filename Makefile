@@ -4,7 +4,7 @@
 OWNER?=$(ACCOUNT)
 IMAGE?=$(DOCKER_IMAGE)
 NAMESPACE:=$(OWNER)/$(DOCKER_IMAGE)
-TAG?=dev
+TAG?=latest
 SHELL:=bash
 
 ALL_STACKS:=minimal-notebook \
@@ -31,15 +31,15 @@ build/%: ## Build and tag a stack
 build-all: $(foreach I,$(ALL_IMAGES), build/$(I) ) ## Build all stacks
 build-test-all: $(foreach I,$(ALL_IMAGES),build/$(I) test/$(I) ) ## build and test all stacks
 
-test-nb/%: DARGS?=
-test-nb/%: ## test stack
-	py.test --nbval test_runner.py $(DARGS)
+test/%: ## run tests against a stack
+	@TEST_IMAGE="$(OWNER)/$(notdir $@)" py.test --nbval test
+test-all: $(foreach I,$(ALL_IMAGES), test/$(I) ) ## test all stacks
 
 dev/%: ARGS?=
 dev/%: DARGS?=
-dev/%: PORT?=8888
+dev/%: PORT?=8080
 dev/%: ## Make a container from a tagged image
-	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
+	docker run -it --rm -p $(PORT):8080 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
 
 dev-env: ## Install libraries required to run containers and tests
 	pip install -r requirements-dev.txt

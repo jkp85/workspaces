@@ -1,4 +1,6 @@
 docker
+nbconvert
+nbval
 pytest
 requests
 runner

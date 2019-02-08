@@ -7,7 +7,7 @@ import stat
 c = get_config()
 c.NotebookApp.iopub_data_rate_limit=1.0e10
 c.NotebookApp.ip = '0.0.0.0'
-c.NotebookApp.port = 8888
+c.NotebookApp.port = 8080
 c.NotebookApp.open_browser = False
 c.NotebookApp.tornado_settings = { 'headers': { 'Content-Security-Policy': "child-src * " } }
 c.NotebookApp.token=''
