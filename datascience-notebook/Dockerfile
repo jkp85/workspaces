@@ -50,9 +50,7 @@ COPY env_test.ipynb $HOME/
 RUN fix-permissions /etc/jupyter/
 RUN fix-permissions $HOME/env_test.ipynb
 
-EXPOSE 8080
-
-EXPOSE 8080
+RUN conda install -c s3contents
 
 EXPOSE 8080
 
