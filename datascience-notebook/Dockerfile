@@ -41,6 +41,9 @@ RUN conda install -c conda-forge xeus-cling && \
 # install jupyter-lti extension
 RUN jupyter labextension install @illumidesk/jupyter-lti
 
+# install s3contents
+RUN conda install -c conda-forge s3contents
+
 # copy/install as root, then fix permissions for $NB_USER
 USER root
 
@@ -49,8 +52,6 @@ COPY jupyter_notebook_config.py /etc/jupyter/
 COPY env_test.ipynb $HOME/
 RUN fix-permissions /etc/jupyter/
 RUN fix-permissions $HOME/env_test.ipynb
-
-RUN conda install -c conda-forge s3contents
 
 EXPOSE 8080
 
