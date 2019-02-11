@@ -25,7 +25,7 @@ COPY env_test.ipynb $HOME/
 RUN fix-permissions /etc/jupyter/
 RUN fix-permissions $HOME/env_test.ipynb
 
-RUN conda install -c s3contents
+RUN conda install -c conda-forge s3contents
 
 EXPOSE 8080
 
