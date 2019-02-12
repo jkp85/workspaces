@@ -42,7 +42,7 @@ RUN conda install -c conda-forge xeus-cling && \
 RUN jupyter labextension install @illumidesk/jupyter-lti
 
 # install s3contents
-RUN conda install -c conda-forge s3contents
+RUN conda install -c conda-forge s3contents nose
 
 # copy/install as root, then fix permissions for $NB_USER
 USER root
