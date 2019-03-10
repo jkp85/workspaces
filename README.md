@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/IllumiDesk/workspaces.svg?branch=master)](https://travis-ci.org/IllumiDesk/workspaces)
+[![Build Status](https://travis-ci.com/IllumiDesk/workspaces.svg?branch=master)](https://travis-ci.com/IllumiDesk/workspaces)
 
 # IllumiDesk Workspaces
 
