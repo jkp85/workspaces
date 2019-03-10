@@ -1,6 +1,6 @@
 docker
-nbconvert
-pytest
-nbval
 requests
+pytest
+nbconvert
+nbval
 runner
