@@ -9,17 +9,23 @@ FROM $BASE_IMAGE
 
 LABEL maintainer="IllumiDesk <hello@illumidesk.com>"
 
+# Create a Python 2.x environment 
+RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
+    ipython \
+    ipykernel \
+    kernda && \
+    conda clean -tipsy
+
 USER root
 
-RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y --no-install-recommends gcc && \
-    rm -rf /var/lib/apt/lists/*
+# Create a global kernelspec in the image and modify it so that it properly activates
+# the python2 conda environment.
+RUN $CONDA_DIR/envs/python2/bin/python -m ipykernel install && \
+    $CONDA_DIR/envs/python2/bin/kernda -o -y /usr/local/share/jupyter/kernels/python2/kernel.json
 
-# base image should have $NB_UID already set, but set it
-# explicitly just in case
 USER $NB_UID
 
-# Install Tensorflow
+# Install Tensorflow for Python3
 RUN conda install --quiet --yes \
     'tensorflow=1.12*' \
     'keras=2.2*' && \
@@ -39,15 +45,11 @@ RUN conda install -c conda-forge xeus-cling && \
     fix-permissions /home/$NB_USER
 
 # install jupyter-lti extension
-RUN jupyter labextension install @illumidesk/jupyter-lti
-
-# install s3contents
-RUN conda install -c conda-forge s3contents nose
+RUN jupyter labextension install @illumidesk/jupyter-lti@1.1.1
 
 # copy/install as root, then fix permissions for $NB_USER
 USER root
 
-RUN jupyter labextension install @illumidesk/jupyter-lti
 COPY jupyter_notebook_config.py /etc/jupyter/
 COPY env_test.ipynb $HOME/
 RUN fix-permissions /etc/jupyter/

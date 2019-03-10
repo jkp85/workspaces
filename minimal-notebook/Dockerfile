@@ -14,15 +14,11 @@ LABEL maintainer="IllumiDesk <hello@illumidesk.com>"
 USER $NB_UID
 
 # install jupyter-lti extension
-RUN jupyter labextension install @illumidesk/jupyter-lti
-
-# install s3contents
-RUN conda install -c conda-forge s3contents nose
+RUN jupyter labextension install @illumidesk/jupyter-lti@1.1.1
 
 # copy/install as root, then fix permissions for $NB_USER
 USER root
 
-RUN jupyter labextension install @illumidesk/jupyter-lti
 COPY jupyter_notebook_config.py /etc/jupyter/
 COPY env_test.ipynb $HOME/
 RUN fix-permissions /etc/jupyter/

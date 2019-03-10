@@ -17,6 +17,8 @@ before_install:
 
 install:
   - make dev-env
+  # workaround
+  - pip install -U pytest
 
 script:
   - set -e
