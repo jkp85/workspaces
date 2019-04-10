@@ -39,7 +39,7 @@ RUN npm install -g ijavascript
 RUN ijsinstall
 
 # Xeus Cling
-RUN conda install -c conda-forge xeus-cling && \
+RUN conda install -c conda-forge xeus-cling nbgrader && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
@@ -54,6 +54,9 @@ COPY jupyter_notebook_config.py /etc/jupyter/
 COPY env_test.ipynb $HOME/
 RUN fix-permissions /etc/jupyter/
 RUN fix-permissions $HOME/env_test.ipynb
+
+RUN mkdir -p /srv/nbgrader/exchange
+RUN chmod ugo+rw /srv/nbgrader/exchange
 
 EXPOSE 8080
 
